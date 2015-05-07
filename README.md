@@ -1,9 +1,6 @@
 # BookGiver
-Ptyhon Project
-
-
-# Project Description
-				
+		
+		Project Description				
 
 ##Why are we doing this?  
 
