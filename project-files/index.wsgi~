@@ -11,7 +11,7 @@ from web import APP
 
 #导入Bottle模块
 #from bottle import *
-#from wechat_sdk.basic import WechatBasic
+from wechat_sdk.basic import WechatBasic
 #from xml import etree
 #from xml.etree import ElementTree
 
