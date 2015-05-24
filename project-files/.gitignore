@@ -1,0 +1,10 @@
+.ropeproject
+*.dump
+*.pyc
+*.db
+*.log
+.svn
+.DS_Store
+*.wsgic
+logs
+xsettings.py

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sae
+import time
 from bottle import *
 from config import CFG
 
@@ -40,9 +41,9 @@ def wechat_post():
      __Content = xml.findtext("Content")
      if "text" == __MsgType:
         if "hi" == __Content:
-#            tStamp = TSTAMP()
-            content = "OK"
+            tStamp = time.time()
+            content = "欢迎！"
             print CFG.TPL_TEXT% locals()
-            return CFG.TPL_TEXT% locals()
+            #return CFG.TPL_TEXT% locals()
      return None
 

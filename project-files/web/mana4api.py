@@ -42,7 +42,7 @@ def wechat_post():
      if "text" == __MsgType:
         if "hi" == __Content:
             tStamp = time.time()
-            content = "OK"
+            content = "欢迎！"
             print CFG.TPL_TEXT% locals()
             return CFG.TPL_TEXT% locals()
      return None
