@@ -11,7 +11,9 @@ import xml.etree.ElementTree as ET
 
 #debug(True)
 APP = Bottle()
+
 import sae.kvdb
+
 KV = sae.kvdb.KVClient()
 #key = 书名+openid
 #value = 南京.5月26日.6月1日
@@ -20,11 +22,25 @@ bk = sae.kvdb.KVClient()
 #key = book+time()
 #value = 书名
 
+##############
+lk = sae.kvdb.KVClient()
+#key = openid
+#value = 微信号
 
+wx = sae.kvdb.KVClient()
+#key = [num]
+#value = 微信号
+
+r = "注册微信号：r_微信号"
+
+w = "获取指定借阅请求的微信号：w_序号"
+
+
+##############
 b = "借书：b_书名(创造力)_城市.开始时间(x月y日).结束时间(x月y日)"
-a = "查询被提交的书目：a"
+a = "查询所有书目：a"
 m = "查看某个书目的所有借阅请求：m_书名(创造力)"
-s = "查看自己提交的所有请求：s"
+s = "查看自己提交的请求：s"
 d = "删除请求：d_书名(创造力)"
 
 
@@ -54,17 +70,18 @@ def wechat_post():
      toUser = xml.findtext("FromUserName")
      __MsgType = xml.findtext("MsgType")
      __Content = xml.findtext("Content")
-     req = []
+#     req = []
 
-     index = []
-     key = ""
-     value = ""
-     bk.index = []
-     bk.key = ""
-     bk.value = ""
- #    content = ""
-     book = ""
-     con = ""
+#     index = []
+#     key = ""
+#     value = ""
+#     bk_index = []
+#     bk_key = ""
+#     bk_value = ""
+#     lk_key = ""
+#     lk_value = ""
+#     book = ""
+#     con = ""
 
      if "text" == __MsgType:
         req = __Content.split('_')
@@ -72,7 +89,7 @@ def wechat_post():
             content = "欢迎！输入 h 继续"
 
         elif "h" == req[0] or "H" == req[0]:
-            content = "%s \n%s \n%s \n%s \n%s"% (b,a,m,s,d)
+            content = "%s \n%s \n%s \n%s \n%s \n%s \n%s"% (r,b,a,m,w,s,d)
             #b+创造力+南京.5月26日.6月1日
             #a+创造力
 
@@ -86,9 +103,16 @@ def wechat_post():
             book = str(req[1].encode('UTF-8'))
             index = KV.getkeys_by_prefix(book, limit=100, marker=None)
             key_spl = []
+            n = 0
             for i in index:
                key_spl = i.split('+')
-               con += "\n %s.%s"% (key_spl[1] ,KV.get(i) ) 
+               wechat = lk.get(key_spl[1])
+               
+               wx.set(str(n), wechat, min_compress_len=0)
+
+               con += "\n %s %s.%s"% (str(n),wechat ,KV.get(i))
+               
+               n += 1
 
                #ovcFVtwLC-7dEArda7gzgfgOPaH0.南京.5月26日.6月1日
 
@@ -96,7 +120,8 @@ def wechat_post():
             #创造力 
             #ovcFVtwLC-7dEArda7gzgfgOPaH0.南京.5月26日.6月1日 
             #ovcFVtwLC-7dEArda7gzgfgOPaH0.南京.5月26日.6月1日
- 
+
+
         elif "b" == req[0] or "B" == req[0]:
             book = str(req[1].encode('UTF-8'))
             #创造力
@@ -142,17 +167,32 @@ def wechat_post():
             count = 0
             for i in index :
                count += 1
-            if count == 1 :  #查找是否还有本书的借阅请求，如果没有
+            if count == 0 :  #查找是否还有本书的借阅请求，如果没有
                bk_index = bk.getkeys_by_prefix("book", limit=100, marker=None)
                print bk_index
                for j in bk_index:
                   print j
                   print bk.get(j)
                   if bk.get(j) == book :                                   #查找书目里是否还有该书，如果有
-                    bk.delete(j) 
+                    bk.delete(j)
 
             content = "%s deleted"% book.decode('UTF-8')
+###
+        elif "r" == req[0] or "R" == req[0]:
+            lk_key = toUser
+            lk_value = req[1]
+            n = 2
+            if len(req) > 2:
+              while n < len(req):
+                 lk_value = lk_value + "_" + req[n]
+                 n += 1
+            lk.set(lk_key,lk_value,min_compress_len=0)
+            content = "%s ok"% lk_value
 
+        elif "w" == req[0] or "W" == req[0]:
+            weixin = wx.get(req[1])
+            content = "%s"% (weixin)
+###
         else :
             content = "输入 h 继续使用"
 
