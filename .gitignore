@@ -1,6 +1,7 @@
 .ropeproject
 *.dump
 *.pyc
+*.py~
 *.db
 *.log
 .svn
