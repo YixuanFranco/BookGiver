@@ -1,89 +1,22 @@
 # BookGiver
-		
-		Project Description				
+### 目的
+微信群里推荐了很多书，有一些是必读的，这其中不乏缺货、绝版的书籍。所以有时会出现这种情况，有群友想看一本书，但是买不到，而另一个群友刚好有这本书，看过并且闲置着，愿意借出，但彼此并不知道。做这个项目，就是希望用微信公众号提供一个互助的借书平台，让闲置的书籍流动起来，让知识更快地传播。
 
-##Why are we doing this?  
+### 使用
+- taker 提交`书名`、`所在城市`、`借阅时间段`
+- giver 查看借书请求，根据自身的意愿进行选择，并与 taker 联系
 
-We got tons of good read in Open Mind Wechat group. But here are the questions:
-Some might have read those “must-read” and they are willing to share books with others.
- But “OTHERS” don’t even know it.
-Even though this ruthless world get them apart, but this is the right time to get them together!
-Let’s make this happen!!!
+### 运行环境
+- 用户界
+   - 微信公众号
 
+- 后台
+   - 使用 SAE 平台运行应用代码
+   - 需要在本地安装 SAE 模拟环境
+   - saecloud deploy 部署代码
+   - saecloud export 下载代码
 
-##What is this going to be?
-
-Functions
-Show weekly recommendation list.
-Let Taker post  Request for Specific Books.
-Let Giver to choose whether they’d like to share.
-If they do ---- badge, rewards<Gamification>.
-
-Users
-
-1. Taker Side.
-2. Giver Side.
-3. Other Users
-
-
-
-##How to make this happen?
-
-* Plan A: App
-	* Basic Version
-		* Developing Tools
-			* Haven’t decided yet.
-		* App Functions        
-			* Requst  [form + Input field]
-				* Location
-				* Name of Book[input field]
-				* Wechat Account[input field]
-				* How long would you like to read?[check list and input field]
-					* One Week
-					* Two Week
-					* Other
-			* Return[Button]
-				* Renew it for another five days[Button]
-				* Reserve[Button -- Advanced Version]
-			* Give him a hand![Button]
-				* Available Location [input field]
-				* Available Time
-			* Letter of Thanks(Rolling list)
-				* e.g:  
-					* Yixuan shared <Darwin’s Dangerous Idea> with Ye zhou.
-					* Ye Zhou shared <Creativity> with Chenjie Gu.
-			* Area Match
-			*  Your Weekly Books ^_^                        
-		
-> 
-Advanced Version
-Load Book List from douban.com
-Info. of Local reading salon
-Transfer Available?
-Book Review
-Personal Credit Record:
-Giver: Award points
-Taker: 
-Renew times
-Book Depreciation
-                        
-               -------------------------------
-> 
-Week 1 - 6
-Week One 5/3-5/9
-Learn how to develope Web APP.  Data Base/ SAE/Bottle
-Week Two 5/10-5/16
-Basic Functions developement.
-Week Three 5/17-5/23
-Basic Functions developement +Try Advanced version
-Week Four 5/24-5/30
-Try Advanced version + Debug
-Week Five 5/31- 6/6
-Debug + Presentation.
-
-
-
-
-
-
-
+- 本地测试
+   - 进入应用的本地开发目录，用`dev_server.py`在本地环境中运行应用
+   - 打开浏览器，输入`http://localhost:8080`，访问应用的欢迎页面
+   - 使用工具`Tmux`+`curl`快速进行代码迭代后的验证测试
